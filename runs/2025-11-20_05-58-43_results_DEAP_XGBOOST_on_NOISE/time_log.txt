@@ -1,0 +1,5 @@
+Experimento: results_XGBOOST_on_NOISE
+Modelo: XGBOOST
+Data: 2025-11-20_05-58-43
+Tempo Total: 1560.22 minutos
+Tempo Total: 26.00 horas

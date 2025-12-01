@@ -1,0 +1,31 @@
+--- RESULTADOS POR TIPO ---
+           Q1_Fundo_Integro (1=Sim, 0=Nao)  ...  Q5_Naturalidade (1 a 5)
+TIPO_REAL                                   ...
+NOISE                                 0.80  ...                     2.85
+ORIGINAL                              0.45  ...                     3.05
+SHIFT                                 0.65  ...                     3.00
+
+[3 rows x 5 columns]
+
+--- TABELA FORMATADA (Copie os valores para o LaTeX) ---
+
+>> TIPO: NOISE
+   Q1_Fundo_Integro (1=Sim, 0=Nao): 80.0%
+   Q2_Falha_Audivel (1=Sim, 0=Nao): 80.0%
+   Q3_Tem_Artefatos (0=Nao, 1=Sim): 65.0%
+   Q4_Tempo_Inteiro (1=Sim, 0=Nao): 75.0%
+   MOS (Naturalidade): 2.85
+
+>> TIPO: ORIGINAL
+   Q1_Fundo_Integro (1=Sim, 0=Nao): 45.0%
+   Q2_Falha_Audivel (1=Sim, 0=Nao): 80.0%
+   Q3_Tem_Artefatos (0=Nao, 1=Sim): 70.0%
+   Q4_Tempo_Inteiro (1=Sim, 0=Nao): 80.0%
+   MOS (Naturalidade): 3.05
+
+>> TIPO: SHIFT
+   Q1_Fundo_Integro (1=Sim, 0=Nao): 65.0%
+   Q2_Falha_Audivel (1=Sim, 0=Nao): 75.0%
+   Q3_Tem_Artefatos (0=Nao, 1=Sim): 55.0%
+   Q4_Tempo_Inteiro (1=Sim, 0=Nao): 65.0%
+   MOS (Naturalidade): 3.00

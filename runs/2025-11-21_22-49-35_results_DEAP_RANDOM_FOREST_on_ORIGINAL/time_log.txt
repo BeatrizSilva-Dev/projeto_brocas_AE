@@ -1,0 +1,5 @@
+Experimento: results_RANDOM_FOREST_on_ORIGINAL
+Modelo: RANDOM_FOREST
+Data: 2025-11-21_22-49-35
+Tempo Total: 3007.14 minutos
+Tempo Total: 50.12 horas
