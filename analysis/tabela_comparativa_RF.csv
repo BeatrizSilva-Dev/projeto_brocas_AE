@@ -1,0 +1,4 @@
+Cenário,Melhor F1-Score,Ganho Relativo
+Baseline (Original),0.3648988206890729,-
+Aumentado A (Shift),0.6751607910610958,+85.0%
+Aumentado B (Noise),0.8051589318869278,+120.7%
