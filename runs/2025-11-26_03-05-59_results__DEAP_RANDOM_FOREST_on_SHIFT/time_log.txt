@@ -1,3 +1,0 @@
-Experimento: results_RANDOM_FOREST_on_SHIFT
-Data Final: 2025-11-27 12:44:05.393372
-Tempo Desta Sessão: 2018.09 minutos

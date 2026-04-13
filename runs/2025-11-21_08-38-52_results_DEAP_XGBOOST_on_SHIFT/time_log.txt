@@ -1,5 +1,0 @@
-Experimento: results_XGBOOST_on_SHIFT
-Modelo: XGBOOST
-Data: 2025-11-21_08-38-52
-Tempo Total: 808.27 minutos
-Tempo Total: 13.47 horas
