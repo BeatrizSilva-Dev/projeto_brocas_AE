@@ -10,8 +10,8 @@ def gerar_boxplot_ieee():
     try:
         caminho_script = os.path.dirname(os.path.abspath(__file__))
 
-        path_ae = os.path.join(caminho_script, "resultados_autoencoder_v.3.csv")
-        path_xgb = os.path.join(caminho_script, "resultados_xgboost_individual_v.3.csv")
+        path_ae = os.path.join(caminho_script, "resultados_autoencoder.csv")
+        path_xgb = os.path.join(caminho_script, "resultados_xgboost_individual.csv")
 
         df_ae_raw = pd.read_csv(path_ae)
         df_xgb_raw = pd.read_csv(path_xgb)
