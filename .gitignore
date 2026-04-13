@@ -1,0 +1,28 @@
+# Ambientes Virtuais (VENV)
+.venv/
+venv/
+env/
+bin/
+lib/
+share/
+
+# Configurações de IDE (PyCharm, VSCode)
+.idea/
+.vscode/
+*.iml
+
+# Cache de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Dados Pesados ou ficheiros temporários (Opcional)
+# Se os áudios .wav forem muito pesados, descomenta a linha abaixo:
+# *.wav
+
+# Ficheiros do Sistema
+.DS_Store
+Thumbs.db
+
+# Ficheiros de log
+*.log
