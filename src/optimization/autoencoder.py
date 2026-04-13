@@ -155,7 +155,7 @@ if len(regional_results) > 0:
     opt_path = os.path.join(base_dir, "src", "optimization")
     if not os.path.exists(opt_path): os.makedirs(opt_path)
 
-    csv_path = os.path.join(opt_path, "resultados_autoencoder_v.3.csv")
+    csv_path = os.path.join(opt_path, "resultados_autoencoder.csv")
     df_export.to_csv(csv_path, index=False)
 
     print(f"\n[SUCESSO] Dados exportados para: {csv_path}")

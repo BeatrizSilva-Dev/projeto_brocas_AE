@@ -157,6 +157,6 @@ if regional_results:
     plt.show()
 
     df_export = pd.DataFrame(export_data)
-    csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resultados_xgboost_individual_v.3.csv")
+    csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resultados_xgboost_individual.csv")
     df_export.to_csv(csv_path, index=False)
     print(f"\nDados exportados para: {csv_path}")
