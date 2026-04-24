@@ -8,8 +8,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPRegressor
 from xgboost import XGBClassifier
 
-DRILL_PATH = r"C:\Users\beatr\OneDrive\Desktop\Projeto_Brocas_AE\data\segmented"
-SAVE_PATH = r"C:\Users\beatr\OneDrive\Desktop\Projeto_Brocas_AE\src\plots_todos_testes"
+DRILL_PATH = r"C:\...\Desktop\Projeto_Brocas_AE\data\segmented"
+SAVE_PATH = r"C:\...\Projeto_Brocas_AE\src\plots_todos_testes"
 CANAL_ALVO = "4"
 N_NORMAL = 5
 N_MFCC = 20
