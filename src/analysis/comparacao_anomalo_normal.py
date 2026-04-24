@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-ROOT_DATA = r"C:\Users\beatr\OneDrive\Desktop\Projeto_Brocas_AE\data\segmented"
+ROOT_DATA = r"C:\...\Projeto_Brocas_AE\data\segmented"
 DRILL_TARGET = "drill_4mm_06"
-CANAL = "Tr1"
+CANAL = "Tr4"
 
 def buscar_arquivo_manual(raiz, drill_folder, num_furo):
     for item in os.listdir(raiz):
