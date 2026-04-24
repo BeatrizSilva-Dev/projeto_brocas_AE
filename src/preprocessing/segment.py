@@ -1,11 +1,4 @@
 #!/usr/bin/env python3
-"""
-Segmenta áudios padronizados em furos individuais, com detecção automática de furos quebrados ("jam"),
-sincronizando os furos detectados no mic de referência com os demais mics (incluindo ultrassônicos).
-Código: Lucas Araújo (UFRPE) - Novembro 2025
-Ajustado: sincronização A (detectar no mic referência e alinhar outros mics), tolerância 5 ms.
-Modificação: contador de furos por mic (arquivo) reinicia por drill.
-"""
 
 import os
 import re
@@ -83,7 +76,6 @@ def parse_jams_text(path):
         if m:
             values.append(int(m.group(1)))
 
-    # ---- lógica acumulativa ----
     jams = []
     current = None
     for v in values:
@@ -264,14 +256,6 @@ def detect_holes_by_deep_valleys(y, sr):
 
 
 def merge_small_outlier_holes(holes, sr, k):
-    """
-    Junta apenas furos muito menores que a média (outliers),
-    com base em média - k*desvio padrão.
-
-    holes: lista de (inicio, fim) em samples
-    sr: taxa de amostragem
-    k: intensidade do filtro (1.0 = moderado, 1.5 = mais restritivo)
-    """
     if not holes or len(holes) < 2:
         return holes
 
