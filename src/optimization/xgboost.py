@@ -10,7 +10,7 @@ from xgboost import XGBClassifier
 from sklearn.metrics import f1_score, confusion_matrix, classification_report, recall_score
 
 
-ROOT_DATASET = r"C:\Users\beatr\OneDrive\Desktop\Projeto_Brocas_AE\data\segmented"
+ROOT_DATASET = r"C:\...\Projeto_Brocas_AE\data\segmented"
 CANAL_ALVO = "4"
 N_NORMAL = 5
 N_MFCC = 20
