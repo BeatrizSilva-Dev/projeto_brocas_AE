@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import StandardScaler
 from xgboost import XGBClassifier
-from sklearn.metrics import f1_score, confusion_matrix, classification_report, recall_score
+from sklearn.metrics import f1_score, confusion_matrix, classification_report, recall_score, roc_auc_score
 
 
 ROOT_DATASET = r"C:\...\Projeto_Brocas_AE\data\segmented"
@@ -27,7 +27,7 @@ def extract_features(y, sr):
 # 2. CARREGAMENTO DOS DADOS
 drills_data = {}
 
-print("Extraindo características das brocas...")
+print("Extraindo características de todas as brocas do dataset...")
 for drill_folder in os.listdir(ROOT_DATASET):
     path = os.path.join(ROOT_DATASET, drill_folder)
     if not os.path.isdir(path): continue
@@ -61,7 +61,11 @@ for drill_folder in os.listdir(ROOT_DATASET):
 regional_results = []
 export_data = []
 
-print(f"Iniciando validação cruzada em {len(drills_data)} brocas...")
+# Listas globais para acumular dados e calcular a AUC 
+all_global_scores = []
+all_global_labels = []
+
+print(f"Iniciando validação cruzada LODO em {len(drills_data)} brocas...")
 
 for drill_test in drills_data:
     X_train, y_train = [], []
@@ -96,7 +100,7 @@ for drill_test in drills_data:
     thresh_final = max(np.percentile(probs[:N_NORMAL], 99.5), 0.1)
     furos_acima = (probs > thresh_final).astype(int)
 
-    # 6. Persistência reduzida para o XGBoost
+    # 6. Persistência
     preds_persistentes = np.zeros(n_holes)
     janela = 3
     for i in range(janela - 1, n_holes):
@@ -113,6 +117,15 @@ for drill_test in drills_data:
     regional_results.append({'y_true': 0, 'y_pred': alerta_na_normal})
     regional_results.append({'y_true': 1, 'y_pred': alerta_na_anomalia})
 
+    # Filtra e acumula exclusivamente os scores das regiões estável (50%) e crítica (20%) para AUC
+    for i in range(n_holes):
+        if i < idx_50:
+            all_global_scores.append(probs[i])
+            all_global_labels.append(0)
+        elif i >= idx_80:
+            all_global_scores.append(probs[i])
+            all_global_labels.append(1)
+
     for i in range(n_holes):
         export_data.append({
             'drill': drill_test,
@@ -126,9 +139,13 @@ if regional_results:
     df_res = pd.DataFrame(regional_results)
     f1_global = f1_score(df_res['y_true'], df_res['y_pred'])
     recall_global = recall_score(df_res['y_true'], df_res['y_pred'])
+    
+    # Cálculo da AUC contendo a totalidade das ferramentas
+    consolidated_auc = roc_auc_score(all_global_labels, all_global_scores)
 
-    print(f"F1-Score Global: {f1_global:.2f}")
-    print(f"Recall Global (Sensibilidade): {recall_global:.2f}")
+    print(f"F1-Score Global: {f1_global:.4f}")
+    print(f"Recall Global (Sensibilidade): {recall_global:.4f}")
+    print(f"Consolidated AUC: {consolidated_auc:.4f}")
 
     plt.rcParams.update({
         "font.family": "serif",
