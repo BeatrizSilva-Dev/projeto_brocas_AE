@@ -7,7 +7,7 @@ import seaborn as sns
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPRegressor
-from sklearn.metrics import f1_score, confusion_matrix, classification_report, recall_score
+from sklearn.metrics import f1_score, confusion_matrix, classification_report, recall_score, roc_auc_score
 
 
 ROOT_DATASET = r"C:\...\Projeto_Brocas_AE\data\segmented"
@@ -27,9 +27,13 @@ def extract_features(y, sr):
         np.mean(rms), np.std(rms)
     ])
 
-# 2. PROCESSAMENTO LEAVE-ONE-DRILL-OUT (LODO)
+# 2. PROCESSAMENTO LEAVE-ONE-DRILL-OUT (LODO) 
 regional_results = []
 processed_drills = {}
+
+# Listas globais para acumular os dados e calcular a AUC 
+all_global_scores = []
+all_global_labels = []
 
 for drill_folder in os.listdir(ROOT_DATASET):
     path = os.path.join(ROOT_DATASET, drill_folder)
@@ -49,7 +53,7 @@ for drill_folder in os.listdir(ROOT_DATASET):
 
     files.sort(key=lambda x: x[0])
 
-    # Remove o último furo (geralmente incompleto devido ao travamento)
+    # Remove o último furo 
     if len(files) > N_NORMAL + 2:
         files = files[:-1]
     else:
@@ -102,6 +106,15 @@ for drill_folder in os.listdir(ROOT_DATASET):
     regional_results.append({'y_true': 0, 'y_pred': alerta_na_normal})
     regional_results.append({'y_true': 1, 'y_pred': alerta_na_anomalia})
 
+    # Acumula exclusivamente os scores correspondentes às regiões limpas (Normal 50% e Anomalia 20%)
+    for i in range(n_holes):
+        if i < idx_50:
+            all_global_scores.append(errors[i])
+            all_global_labels.append(0)
+        elif i >= idx_80:
+            all_global_scores.append(errors[i])
+            all_global_labels.append(1)
+
     processed_drills[drill_folder] = {
         'errors_ae': errors,
         'labels': [1 if (i/n_holes) >= 0.8 else 0 for i in range(n_holes)],
@@ -111,6 +124,12 @@ for drill_folder in os.listdir(ROOT_DATASET):
 # 3. MÉTRICAS E PLOTAGEM
 if len(regional_results) > 0:
     df_res = pd.DataFrame(regional_results)
+    
+    # Cálculo consolidado da AUC 
+    consolidated_auc = roc_auc_score(all_global_labels, all_global_scores)
+    
+    print(f"Consolidated AUC: {consolidated_auc:.4f}")
+
     plt.rcParams.update({
         "font.family": "serif",
         "font.serif": ["Times New Roman"],
@@ -137,7 +156,6 @@ if len(regional_results) > 0:
     plt.savefig("matriz_autoencoder.pdf", bbox_inches='tight', pad_inches=0.01)
     plt.show()
 
-
     export_data = []
     for drill_name, data in processed_drills.items():
         for i, (err, label) in enumerate(zip(data['errors_ae'], data['labels'])):
@@ -158,7 +176,7 @@ if len(regional_results) > 0:
     csv_path = os.path.join(opt_path, "resultados_autoencoder.csv")
     df_export.to_csv(csv_path, index=False)
 
-    print(f"\n[SUCESSO] Dados exportados para: {csv_path}")
+    print(f"\n Dados exportados para: {csv_path}")
 
 else:
-    print("\n[ERRO] Nenhum dado foi processado. Verifique os caminhos do dataset.")
+    print("\n Nenhum dado foi processado. Verifique os caminhos do dataset.")
